@@ -4,6 +4,8 @@ import "testing"
 
 func TestLogin(t *testing.T) {
 
+	// Before running this test, make sure to set your username and password below.
+
 	// Disqus
 	bot := With("https://disqus.com/profile/login/").
 		AddHost("disqus.com").

@@ -15,11 +15,11 @@ In this example, we'll authenticate with Disqus ( https://disqus.com/ ) which is
 This step loads the CSRF cookie.
 
 ```
-	bot := djangobot.With("https://disqus.com/profile/login/").
-		               AddHost("disqus.com").
-		               SetUsername("<<username>>").
-		               SetPassword("<<password>>").
-                   LoadCookies()
+bot := djangobot.With("https://disqus.com/profile/login/").
+		 AddHost("disqus.com").
+		 SetUsername("<<username>>").
+		 SetPassword("<<password>>").
+                 LoadCookies()
                    
 ```
 

@@ -28,15 +28,15 @@ This step loads the CSRF cookie.
 Django expects the csrf token to be sent as the **csrfmiddlewaretoken** HTTP header.
 
 ```
-	client, err := bot.Set("next", "https://disqus.com/").
+client, err := bot.Set("next", "https://disqus.com/").
 		                 X("csrfmiddlewaretoken", bot.Cookies["csrftoken"].Value).
 		                 X("username", bot.Username).
 		                 X("password", bot.Password).
 		                 Login()
 
-	if err != nil {
-		  panic(err)
-	}
+if err != nil {
+	panic(err)
+}
 ```
 
 ### Step 3: Check authentication result
@@ -44,12 +44,12 @@ Django expects the csrf token to be sent as the **csrfmiddlewaretoken** HTTP hea
 Successful authentication creates the **sessionid** cookie.
 
 ```
-	cookie, ok := bot.Cookies["sessionid"]
-	if !ok {
-	    panic("Authentication failed.")
-	}
+cookie, ok := bot.Cookies["sessionid"]
+if !ok {
+	panic("Authentication failed.")
+}
   
-  fmt.Println(cookie.Value)
+ fmt.Println(cookie.Value)
   
 ```
 

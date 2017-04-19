@@ -35,7 +35,7 @@ In this example, we'll authenticate with [Disqus](https://disqus.com/) which is 
 
 The query parameter is **next** and the form data items are **csrfmiddlewaretoken**, **username**, and **password**.
 
-We'll do the same. But before being able to call the login endpoint we'll need the CSRF token. Let's get the CSRF token.
+We'll do the same. But before being able to call the login endpoint we'll need to accquire the CSRF token. Let's go get it.
 
 ```
 bot := djangobot.With("https://disqus.com/profile/login/").
@@ -49,7 +49,7 @@ if bot.Error != nil {
 }
 ```
 
-Next, let's authenticate with the server. Django expects the csrf token to be sent as the **csrfmiddlewaretoken** HTTP header.
+Next, let's authenticate with the server. Django expects the csrf token to be sent as the **csrfmiddlewaretoken** form data.
 
 ```
 client, err := bot.Set("next", "https://disqus.com/").
@@ -63,6 +63,8 @@ if err != nil {
 }
 ```
 
+**Set()** sets the query parameters and **X()** sets the form data.
+
 Successful authentication creates the **sessionid** cookie and returns an http [client](https://github.com/parnurzeal/gorequest) object.
 
 ```	 
@@ -72,4 +74,6 @@ if sessionid == "" {
 }
   
 ```
+
+From this point on, you can use the HTTP client to make requests.
 

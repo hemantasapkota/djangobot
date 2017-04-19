@@ -42,7 +42,11 @@ bot := djangobot.With("https://disqus.com/profile/login/").
 		 AddHost("disqus.com").
 		 SetUsername("<<username>>").
 		 SetPassword("<<password>>").
-                 LoadCookies()                   
+                 LoadCookies()
+
+if bot.Error != nil {
+	panic(bot.Error)
+}
 ```
 
 Next, let's authenticate with the server. Django expects the csrf token to be sent as the **csrfmiddlewaretoken** HTTP header.

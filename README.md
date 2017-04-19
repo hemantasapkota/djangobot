@@ -33,10 +33,9 @@ In this example, we'll authenticate with Disqus ( https://disqus.com/ ) which is
 
 ![](disqus.png)
 
-Query parameters: **next**
-Form Data: **csrfmiddlewaretoken**, **username**, and **password**.
+The query parameter is **next** and the form data items are **csrfmiddlewaretoken**, **username**, and **password**.
 
-We'll do the same. Before being able to call the login endpoint we'll need the CSRF token. Let's get the CSRF token.
+We'll do the same. But before being able to call the login endpoint we'll need the CSRF token. Let's get the CSRF token.
 
 ```
 bot := djangobot.With("https://disqus.com/profile/login/").

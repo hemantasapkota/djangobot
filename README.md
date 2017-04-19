@@ -11,7 +11,11 @@ To make a secure connection we need SSL/TLS certificates. GO has a package calle
 
 With certs in place, all we need is the authentication details and we're good to go.
 
-# 
+# What are the potential use cases for this library ?
+
+* API testing
+* Web Scraping
+* Automation
 
 # Installation
 
@@ -64,9 +68,3 @@ if !ok {
  fmt.Println(cookie.Value)
   
 ```
-
-# Use cases
-
-* Developer testing
-* Web Scraping
-* API

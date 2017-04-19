@@ -72,6 +72,14 @@ func (c *Bot) cookieKey(cookie *http.Cookie) string {
 	return strings.Split(cookie.Raw, "=")[0]
 }
 
+func (c *Bot) Cookie(key string) *http.Cookie {
+	cookie, ok := c.Cookies[key]
+	if !ok {
+		return &http.Cookie{}
+	}
+	return cookie
+}
+
 func (c *Bot) appendCookies(resp *http.Response) {
 	if c.Cookies == nil {
 		c.Cookies = make(map[string]*http.Cookie)

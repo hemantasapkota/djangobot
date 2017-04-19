@@ -17,10 +17,11 @@ type Bot struct {
 	Username string
 	Password string
 
-	hosts  []string
 	Client *gorequest.SuperAgent
-
 	Cookies map[string]*http.Cookie
+
+	hosts  []string
+	Error error
 }
 
 func With(requestUrl string) *Bot {
@@ -91,7 +92,7 @@ func (c *Bot) LoadCookies() *Bot {
 
 	var tlsConfig *tls.Config
 
-	c.Client = gorequest.New().SetCurlCommand(true).SetDebug(false)
+	c.Client = gorequest.New().SetCurlCommand(false).SetDebug(false)
 
 	// Get certs for SSL connection
 	m := autocert.Manager{
@@ -104,6 +105,10 @@ func (c *Bot) LoadCookies() *Bot {
 	c.Client = c.Client.TLSClientConfig(tlsConfig).Get(c.RequestUrl).Set(c.userAgent())
 
 	resp, body, errs = c.Client.EndBytes()
+
+	if errs != nil {
+		c.Error = errs[0]
+	}
 
 	// Add cookies from the response to the client
 	c.appendCookies(resp)

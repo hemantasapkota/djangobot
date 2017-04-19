@@ -12,6 +12,10 @@ func TestLogin(t *testing.T) {
 		SetUsername("").
 		SetPassword("")
 
+	if bot.Error != nil {
+		panic(bot.Error)
+	}
+
 	_, err := bot.LoadCookies().
 		Set("next", "https://disqus.com/").
 		X("csrfmiddlewaretoken", bot.Cookies["csrftoken"].Value).

@@ -8,7 +8,7 @@ func TestLogin(t *testing.T) {
 
 	// Disqus
 	bot := With("https://disqus.com/profile/login/").
-		AddHost("disqus.com").
+		ForHost("disqus.com").
 		SetUsername("").
 		SetPassword("")
 
@@ -27,11 +27,11 @@ func TestLogin(t *testing.T) {
 		panic(err)
 	}
 
-	 cookie, ok := bot.Cookies["sessionid"]
-	 if !ok {
+	 sessionid := bot.Cookie("sessionid").Value
+	 if sessionid == "" {
 	 	t.Error("Authentication failed.")
 	 }
 
-	 t.Log(cookie.Value)
+	 t.Log(sessionid)
 
 }

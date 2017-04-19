@@ -29,7 +29,7 @@ See an example usage below.
 * Execute ```go get github.com/hemantasapkota/djangobot```
 
 # Usage
-In this example, we'll authenticate with Disqus ( https://disqus.com/ ) which is built on top of Django. Let's inspect the parameters that get sent to the login endpoint.
+In this example, we'll authenticate with [Disqus](https://disqus.com/) which is built on top of Django. Let's inspect the parameters that get sent to the login endpoint.
 
 ![](disqus.png)
 
@@ -39,10 +39,10 @@ We'll do the same. But before being able to call the login endpoint we'll need t
 
 ```
 bot := djangobot.With("https://disqus.com/profile/login/").
-		 AddHost("disqus.com").
+		 ForHost("disqus.com").
 		 SetUsername("<<username>>").
 		 SetPassword("<<password>>").
-                 LoadCookies()
+         LoadCookies()
 
 if bot.Error != nil {
 	panic(bot.Error)
@@ -63,14 +63,13 @@ if err != nil {
 }
 ```
 
-Successful authentication creates the **sessionid** cookie.
+Successful authentication creates the **sessionid** cookie and returns an http [client](https://github.com/parnurzeal/gorequest) object.
 
-```
-cookie, ok := bot.Cookies["sessionid"]
-if !ok {
-	panic("Authentication failed.")
+```	 
+sessionid := bot.Cookie("sessionid").Value
+if sessionid == "" {
+    panic("Authentication failed.")
 }
   
- fmt.Println(cookie.Value)
-  
 ```
+

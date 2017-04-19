@@ -42,7 +42,7 @@ func (c *Bot) X(key string, val string) *Bot {
 	return c
 }
 
-func (c *Bot) AddHost(host string) *Bot {
+func (c *Bot) ForHost(host string) *Bot {
 	c.hosts = append(c.hosts, host)
 	return c
 }

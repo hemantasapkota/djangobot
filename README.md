@@ -29,10 +29,10 @@ Django expects the csrf token to be sent as the **csrfmiddlewaretoken** HTTP hea
 
 ```
 client, err := bot.Set("next", "https://disqus.com/").
-		                 X("csrfmiddlewaretoken", bot.Cookies["csrftoken"].Value).
-		                 X("username", bot.Username).
-		                 X("password", bot.Password).
-		                 Login()
+		   X("csrfmiddlewaretoken", bot.Cookies["csrftoken"].Value).
+		   X("username", bot.Username).
+		   X("password", bot.Password).
+		   Login()
 
 if err != nil {
 	panic(err)

@@ -9,7 +9,7 @@ Getting the **csrfmiddlewaretoken** is easy. Just make a request to a page and t
 
 **Sessionid**, however is tricky because most production servers configure it as a [secure HTTP only](https://docs.djangoproject.com/en/1.11/ref/settings/#std:setting-SESSION_COOKIE_SECURE) cookie. It is only sent if authentication is made securely ( via. HTTPS )
 
-To make a secure connection we need SSL/TLS certificates. GO has a package called [autocert](https://godoc.org/golang.org/x/crypto/acme/autocert) which lets us accquire these certificates.
+To make a secure connection we need SSL/TLS certificates. GO has a package called [autocert](https://godoc.org/golang.org/x/crypto/acme/autocert) which lets us accquire these certificates. Autocert provides automatic access to certificates from [Let's Encrypt](https://letsencrypt.org/) and any other ACME-based CA.
 
 With certs in place, all we need is the authentication details and we're good to go.
 
@@ -42,7 +42,7 @@ bot := djangobot.With("https://disqus.com/profile/login/").
 		 ForHost("disqus.com").
 		 SetUsername("<<username>>").
 		 SetPassword("<<password>>").
-         LoadCookies()
+         	 LoadCookies()
 
 if bot.Error != nil {
 	panic(bot.Error)

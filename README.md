@@ -29,11 +29,14 @@ See an example usage below.
 * Execute ```go get github.com/hemantasapkota/djangobot```
 
 # Usage
-In this example, we'll authenticate with Disqus ( https://disqus.com/ ) which is built on top of Django.
+In this example, we'll authenticate with Disqus ( https://disqus.com/ ) which is built on top of Django. Let's inspect the parameters that get sent to the login endpoint.
 
-## Step 1: Load Cookies
+![](disqus.png)
 
-This step loads the CSRF cookie.
+Query parameters: **next**
+Form Data: **csrfmiddlewaretoken**, **username**, and **password**.
+
+We'll do the same. Before being able to call the login endpoint we'll need the CSRF token. Let's get the CSRF token.
 
 ```
 bot := djangobot.With("https://disqus.com/profile/login/").
@@ -43,9 +46,7 @@ bot := djangobot.With("https://disqus.com/profile/login/").
                  LoadCookies()                   
 ```
 
-## Step 2: Authenticate with the server
-
-Django expects the csrf token to be sent as the **csrfmiddlewaretoken** HTTP header.
+Next, let's authenticate with the server. Django expects the csrf token to be sent as the **csrfmiddlewaretoken** HTTP header.
 
 ```
 client, err := bot.Set("next", "https://disqus.com/").
@@ -58,8 +59,6 @@ if err != nil {
 	panic(err)
 }
 ```
-
-### Step 3: Check authentication result
 
 Successful authentication creates the **sessionid** cookie.
 

@@ -53,7 +53,7 @@ Next, let's authenticate with the server. Django expects the csrf token to be se
 
 ```
 client, err := bot.Set("next", "https://disqus.com/").
-		   X("csrfmiddlewaretoken", bot.Cookies["csrftoken"].Value).
+		   X("csrfmiddlewaretoken", bot.Cookie("csrftoken").Value).
 		   X("username", bot.Username).
 		   X("password", bot.Password).
 		   Login()

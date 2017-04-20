@@ -3,9 +3,9 @@
 
 # How does it work ?
 
-Django authentication relies on two cookies: **csrfmiddlewaretoken** and **sessionid**. Once you accquire these cookies, you can make authenticated requests just like the browser does.
+Django authentication relies on two cookies: **csrftoken** and **sessionid**. Once you accquire these cookies, you can make authenticated requests just like the browser does.
 
-Getting the **csrfmiddlewaretoken** is easy. Just make a request to a page and the server sends back the cookie. 
+Getting the **csrftoken** is easy. Just make a request to a page and the server sends back the cookie. 
 
 **Sessionid**, however is tricky because most production servers configure it as a [secure HTTP only](https://docs.djangoproject.com/en/1.11/ref/settings/#std:setting-SESSION_COOKIE_SECURE) cookie. It is only sent if authentication is made securely ( via. HTTPS )
 
@@ -49,7 +49,7 @@ if bot.Error != nil {
 }
 ```
 
-Next, let's authenticate with the server. Django expects the csrf token to be sent as the **csrfmiddlewaretoken** form data.
+Next, let's authenticate with the server. Django expects the csrf token to be sent as the **csrfmiddlewaretoken** form data. **Set()** sets the query parameters and **X()** sets the form data.
 
 ```
 client, err := bot.Set("next", "https://disqus.com/").
@@ -62,8 +62,6 @@ if err != nil {
 	panic(err)
 }
 ```
-
-**Set()** sets the query parameters and **X()** sets the form data.
 
 Successful authentication creates the **sessionid** cookie and returns an http [client](https://github.com/parnurzeal/gorequest) object.
 

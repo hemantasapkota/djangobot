@@ -57,11 +57,11 @@ func (c *Bot) SetPassword(password string) *Bot {
 	return c
 }
 
-func (c *Bot) referrer() (string, string) {
+func (c *Bot) Referrer() (string, string) {
 	return "Referer", c.RequestUrl
 }
 
-func (c *Bot) userAgent() (string, string) {
+func (c *Bot) UserAgent() (string, string) {
 	return "User-Agent", `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36`
 }
 
@@ -110,7 +110,7 @@ func (c *Bot) LoadCookies() *Bot {
 
 	tlsConfig = &tls.Config{GetCertificate: m.GetCertificate}
 
-	c.Client = c.Client.TLSClientConfig(tlsConfig).Get(c.RequestUrl).Set(c.userAgent())
+	c.Client = c.Client.TLSClientConfig(tlsConfig).Get(c.RequestUrl).Set(c.UserAgent())
 
 	resp, body, errs = c.Client.EndBytes()
 
@@ -146,8 +146,8 @@ func (c *Bot) Login() (*gorequest.SuperAgent, error) {
 	if len(c.FormData) > 0 {
 		c.Client = c.Client.
 			Post(url).
-			Set(c.userAgent()).
-			Set(c.referrer()).
+			Set(c.UserAgent()).
+			Set(c.Referrer()).
 			Send(formEncode(c.FormData)).
 			RedirectPolicy(rPolicy)
 	}
@@ -172,4 +172,13 @@ func formEncode(data map[string]string) string {
 		values = append(values, fmt.Sprintf(`%s=%s`, key, value))
 	}
 	return strings.Join(values, "&")
+}
+
+func (c *Bot) Requester(method string, endpoint string) *Bot {
+	c.Client = c.Client.CustomMethod(method, endpoint).
+		Set(c.UserAgent()).
+		Set(c.Referrer()).
+		Set("X-CSRFToken", c.Cookie("csrftoken").Value).
+		Set("X-Requested-With", "XMLHttpRequest")
+	return c
 }

@@ -77,3 +77,7 @@ if sessionid == "" {
 
 From this point on, you can use the HTTP client to make requests.
 
+All subsequent requests should have at least these headers: **User-Agent**, **Referrer**, **X-CSRFToken**, and **X-Requested-With**.
+
+```bot.Requester()``` does exactly this. It prepares the http client with all the required headers. See the test files for more details.
+

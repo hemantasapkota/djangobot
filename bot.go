@@ -3,10 +3,11 @@ package djangobot
 import (
 	"crypto/tls"
 	"fmt"
-	"github.com/parnurzeal/gorequest"
-	"golang.org/x/crypto/acme/autocert"
 	"net/http"
 	"strings"
+
+	"github.com/parnurzeal/gorequest"
+	"golang.org/x/crypto/acme/autocert"
 )
 
 type Bot struct {
@@ -17,10 +18,10 @@ type Bot struct {
 	Username string
 	Password string
 
-	Client *gorequest.SuperAgent
+	Client  *gorequest.SuperAgent
 	Cookies map[string]*http.Cookie
 
-	hosts  []string
+	hosts []string
 	Error error
 }
 
@@ -81,15 +82,17 @@ func (c *Bot) Cookie(key string) *http.Cookie {
 }
 
 func (c *Bot) appendCookies(resp *http.Response) {
-	if c.Cookies == nil {
-		c.Cookies = make(map[string]*http.Cookie)
-	}
+	if resp != nil {
+		if c.Cookies == nil {
+			c.Cookies = make(map[string]*http.Cookie)
+		}
 
-	for _, cookie := range resp.Cookies() {
-		// Get key
-		c.Cookies[c.cookieKey(cookie)] = cookie
-		// Append cookies to the client ( Should've been appended after the requests automatically, but does not )
-		c.Client = c.Client.AddCookie(cookie)
+		for _, cookie := range resp.Cookies() {
+			// Get key
+			c.Cookies[c.cookieKey(cookie)] = cookie
+			// Append cookies to the client ( Should've been appended after the requests automatically, but does not )
+			c.Client = c.Client.AddCookie(cookie)
+		}
 	}
 }
 
